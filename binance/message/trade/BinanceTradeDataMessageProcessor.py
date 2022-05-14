@@ -1,5 +1,5 @@
+from coreutility.collection.dictionary_utility import as_data
 from data.message.DataMessageProcessor import DataMessageProcessor
-from utility.json_utility import as_data
 
 from binance.message.trade.handler.BinanceTradeDataMessageHandler import BinanceTradeDataMessageHandler
 from binance.message.trade.transform.BinanceTradeMessageTransformer import BinanceTradeMessageTransformer
@@ -14,6 +14,7 @@ class BinanceTradeDataMessageProcessor(DataMessageProcessor):
         self.message_handler = message_handler
 
     def process_message(self, message):
+        # todo: need to know the side...
         symbol = as_data(message, 's')
         quantity = as_data(message, 'q')
         order_id = as_data(message, 'i')

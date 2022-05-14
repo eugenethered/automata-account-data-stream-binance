@@ -1,12 +1,12 @@
 import logging
 
 from cache.holder.RedisCacheHolder import RedisCacheHolder
-from core.arguments.command_line_arguments import option_arg_parser
+from core.arguments.command_line_arguments import url_option_arg_parser
 
-from accountdata.BinanceAccountDataStream import BinanceAccountDataStream
+from binance.BinanceAccountDataStream import BinanceAccountDataStream
 
 if __name__ == '__main__':
-    command_line_arg_parser = option_arg_parser()
+    command_line_arg_parser = url_option_arg_parser()
     args = command_line_arg_parser.parse_args()
 
     logging.basicConfig(level=logging.INFO)
