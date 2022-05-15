@@ -15,12 +15,16 @@ class BinanceDataPayloadProcessor(DataPayloadProcessor):
     def process_payload(self, payload):
         json_data = as_json(payload)
         logging.info(f'Payload received:{json_data}')
-        # stream = as_data(json_data, 'stream')
-        # payload_data = as_data(json_data, 'data')
-        # for message in payload_data:
-        #     self.process_payload_message(message, stream)
+        payload_data = as_data(json_data, 'data')
+        data_value = self.listen_data_value(payload_data)
+        for message in payload_data:
+            self.process_payload_message(message, data_value)
 
-    def process_payload_message(self, payload_message, stream):
+    def process_payload_message(self, payload_message, data_value):
         for message_processor in self.message_processors:
-            if message_processor.get_listen_to_stream() == stream:
+            if message_processor.get_listen_data() == data_value:
                 message_processor.process_message(payload_message)
+
+    @staticmethod
+    def listen_data_value(data):
+        return as_data(data, 'e')

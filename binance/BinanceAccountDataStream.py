@@ -9,7 +9,6 @@ from binance.payload.BinanceDataPayloadProcessor import BinanceDataPayloadProces
 
 class BinanceAccountDataStream:
 
-    # todo: need to handle the "listen key" -> for orders
     def __init__(self, url, options):
         self.options = options
         self.url = url
