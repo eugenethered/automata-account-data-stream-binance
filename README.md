@@ -15,10 +15,12 @@
    --options 
      REDIS_SERVER_ADDRESS=192.168.1.90 
      REDIS_SERVER_PORT=6379 
-     TRADE_TRANSFORMATIONS_KEY=binance:trade:transformations  
+     TRADE_TRANSFORMATIONS_KEY=binance:trade:transformations 
      AUTH_URL=https://api.binance.com/api/v3/userDataStream 
-     AUTH_INFO_KEY=binance:auth:info  
-     MISSING_KEY=binance:missing
+     AUTH_INFO_KEY=binance:auth:info 
+     MISSING_KEY=binance:missing 
+     TRADE_KEY=binance:trade 
+     POSITION_KEY=binance:position 
    ```
 
 ## Environments

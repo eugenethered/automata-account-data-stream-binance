@@ -23,19 +23,19 @@ class BinanceTradeMessageTransformerTestCase(unittest.TestCase):
         self.assertEqual(order.order_id, '8888-8888')
         self.assertEqual(order.order_type, OrderType.MARKET)
         self.assertEqual(order.status, Status.NEW)
-        self.assertEqual(order.interval, 1)
+        self.assertEqual(order.instant, 1)
         self.assertEqual(order.price, None)
         self.assertEqual(order.value, None)
 
     def test_should_transform_order_parts_into_executed_order_with_value_and_price(self):
-        order = self.message_transformer.transform('OTCBTC', 'SELL', '100.01', '8888-8888', 'MARKET', 'NEW', 1, '1.01', '101.0101')
+        order = self.message_transformer.transform('OTCBTC', 'SELL', '100.01', '8888-8888', 'MARKET', 'FILLED', 1, '1.01', '101.0101')
         self.assertEqual(order.instrument_from, 'OTC')
         self.assertEqual(order.instrument_to, 'BTC')
         self.assertEqual(order.quantity, BigFloat('100.01'))
         self.assertEqual(order.order_id, '8888-8888')
         self.assertEqual(order.order_type, OrderType.MARKET)
-        self.assertEqual(order.status, Status.NEW)
-        self.assertEqual(order.interval, 1)
+        self.assertEqual(order.status, Status.EXECUTED)
+        self.assertEqual(order.instant, 1)
         self.assertEqual(order.price, BigFloat('1.01'))
         self.assertEqual(order.value, BigFloat('101.0101'))
 

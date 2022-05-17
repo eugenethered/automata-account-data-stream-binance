@@ -47,11 +47,20 @@ class BinanceTradeMessageTransformer:
     def transform_to_order(self, instrument_from, instrument_to, quantity, order_id, raw_order_type, status, event_time, price, value) -> Order:
         order_quantity = self.obtain_big_float_value(quantity)
         order_type = OrderType.parse(raw_order_type)
-        order_status = Status.parse(status)
+        order_status = self.obtain_order_status(status)
         order = Order(instrument_from, instrument_to, order_quantity, order_id, order_type, order_status, event_time)
         self.set_order_price(order, price)
         self.set_order_value(order, value)
         return order
+
+    @staticmethod
+    def obtain_order_status(status_value):
+        status_normalized = status_value.upper()
+        if status_normalized == 'NEW':
+            return Status.NEW
+        elif status_normalized == 'FILLED':
+            return Status.EXECUTED
+        # todo: handle other cases (error, other side-effects)
 
     def set_order_value(self, order, value):
         order_value = self.obtain_big_float_value(value)
