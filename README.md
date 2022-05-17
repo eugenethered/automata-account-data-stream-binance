@@ -21,6 +21,8 @@
      MISSING_KEY=binance:missing 
      TRADE_KEY=binance:trade 
      POSITION_KEY=binance:position 
+     TRADE_HISTORY_LIMIT=100 
+     POSITION_HISTORY_LIMIT=100 
    ```
 
 ## Environments
