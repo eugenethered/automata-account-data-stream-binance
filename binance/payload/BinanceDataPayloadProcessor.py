@@ -1,6 +1,7 @@
 import logging
 from typing import List
 
+from config.report.holder.ConfigReporterHolder import ConfigReporterHolder
 from coreutility.collection.dictionary_utility import as_data
 from coreutility.json.json_utility import as_json
 from data.message.DataMessageProcessor import DataMessageProcessor
@@ -24,7 +25,13 @@ class BinanceDataPayloadProcessor(DataPayloadProcessor):
         for message_processor in self.message_processors:
             if message_processor.get_listen_data() == data_value:
                 message_processor.process_message(payload_message)
+        self.post_payload_process()
 
     @staticmethod
     def listen_data_value(data):
         return as_data(data, 'e')
+
+    @staticmethod
+    def post_payload_process():
+        logging.debug('post payload processing')
+        ConfigReporterHolder().delay_missing_storing()

@@ -1,6 +1,7 @@
 import logging
 
 from cache.holder.RedisCacheHolder import RedisCacheHolder
+from config.report.holder.ConfigReporterHolder import ConfigReporterHolder
 from core.arguments.command_line_arguments import url_option_arg_parser
 
 from binance.BinanceAccountDataStream import BinanceAccountDataStream
@@ -13,6 +14,8 @@ if __name__ == '__main__':
     logging.info(f'Binance Account Data Stream starting with URL {args.url} OPTIONS {args.options}')
 
     RedisCacheHolder(args.options)
+
+    ConfigReporterHolder(args.options)
 
     data_stream = BinanceAccountDataStream(args.url, args.options)
     data_stream.receive_data()

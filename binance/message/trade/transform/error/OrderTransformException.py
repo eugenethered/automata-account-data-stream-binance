@@ -1,0 +1,2 @@
+class OrderTransformException(Exception):
+    pass
