@@ -21,6 +21,7 @@ class BinanceTradeDataMessageHandler:
             trade.instant = order.instant
             self.trade_repository.store_trade(trade)
 
+    # todo: need to employ this method!
     def create_position_from_trade(self, trade: InstrumentTrade):
         instrument = trade.instrument_to
         quantity = trade.value
