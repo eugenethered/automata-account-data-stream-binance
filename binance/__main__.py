@@ -7,10 +7,11 @@ from logger.ConfigureLogger import ConfigureLogger
 
 from binance.BinanceAccountDataStream import BinanceAccountDataStream
 
-if __name__ == '__main__':
+
+def start():
     ConfigureLogger()
 
-    command_line_arg_parser = url_option_arg_parser()
+    command_line_arg_parser = url_option_arg_parser('persuader-technology-automata-account-data-stream-binance')
     args = command_line_arg_parser.parse_args()
 
     log = logging.getLogger('Binance Account Data Stream')
@@ -22,3 +23,7 @@ if __name__ == '__main__':
 
     data_stream = BinanceAccountDataStream(args.url, args.options)
     data_stream.receive_data()
+
+
+if __name__ == '__main__':
+    start()

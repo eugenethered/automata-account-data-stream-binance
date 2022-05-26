@@ -19,7 +19,9 @@
      TRADE_KEY=binance:trade 
      POSITION_KEY=binance:position 
      TRADE_HISTORY_LIMIT=100 
-     POSITION_HISTORY_LIMIT=100 
+     POSITION_HISTORY_LIMIT=100
+     PROCESS_KEY={}:process:status:{} 
+     PROCESS_RUN_PROFILE_KEY={}:process:run-profile:{} 
    ```
 
 ## Environments

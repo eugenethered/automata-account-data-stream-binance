@@ -1,5 +1,6 @@
 from data.websocket.WebSocketRunner import WebSocketRunner
 from positionrepo.repository.PositionRepository import PositionRepository
+from processmanager.ProcessBase import ProcessBase
 from traderepo.repository.TradeRepository import TradeRepository
 from tradetransformrepo.repository.TradeTransformRepository import TradeTransformRepository
 
@@ -10,15 +11,21 @@ from binance.message.trade.transform.BinanceTradeMessageTransformer import Binan
 from binance.payload.BinanceDataPayloadProcessor import BinanceDataPayloadProcessor
 
 
-class BinanceAccountDataStream:
+class BinanceAccountDataStream(ProcessBase):
 
     def __init__(self, url, options):
+        super().__init__(options, 'binance', 'account-data-stream')
         self.options = options
         self.url = url
         authenticator = BinanceAuthenticator(self.options)
         trade_message_processor = self.init_trade_message_processor()
         payload_processor = BinanceDataPayloadProcessor([trade_message_processor])
         self.ws_runner = WebSocketRunner(self.url, payload_processor, ping_interval=8, authenticator=authenticator)
+        self.init_web_socket_callbacks()
+
+    def init_web_socket_callbacks(self):
+        self.ws_runner.set_stopped_callback(self.process_stopped)
+        self.ws_runner.set_running_callback(self.process_running)
 
     def init_trade_message_processor(self):
         trade_transform_repository = TradeTransformRepository(self.options)

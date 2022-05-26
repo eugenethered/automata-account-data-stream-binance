@@ -16,7 +16,7 @@ class BinanceDataPayloadProcessor(DataPayloadProcessor):
 
     def process_payload(self, payload):
         json_data = as_json(payload)
-        self.log.info(f'Payload received:{json_data}')
+        self.log.debug(f'Payload received:{json_data}')
         payload_data = as_data(json_data, 'data')
         data_value = self.listen_data_value(payload_data)
         for message in payload_data:
