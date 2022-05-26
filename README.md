@@ -3,9 +3,6 @@
 ## Packaging
 `python3 -m build`
 
-## Dependencies (IDE Terminal)
-`pip install persuader-technology-automata-core persuader-technology-automata-data.stream persuader-technology-automata-trade-repository`
-
 ### IDE
 1. Go to `Run`
 2. Choose `Edit configurations...`

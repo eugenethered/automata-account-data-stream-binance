@@ -11,11 +11,12 @@ from data.payload.DataPayloadProcessor import DataPayloadProcessor
 class BinanceDataPayloadProcessor(DataPayloadProcessor):
 
     def __init__(self, message_processors: List[DataMessageProcessor]):
+        self.log = logging.getLogger(__name__)
         self.message_processors = message_processors
 
     def process_payload(self, payload):
         json_data = as_json(payload)
-        logging.info(f'Payload received:{json_data}')
+        self.log.info(f'Payload received:{json_data}')
         payload_data = as_data(json_data, 'data')
         data_value = self.listen_data_value(payload_data)
         for message in payload_data:
@@ -31,7 +32,6 @@ class BinanceDataPayloadProcessor(DataPayloadProcessor):
     def listen_data_value(data):
         return as_data(data, 'e')
 
-    @staticmethod
-    def post_payload_process():
-        logging.debug('post payload processing')
+    def post_payload_process(self):
+        self.log.debug('post payload processing')
         ConfigReporterHolder().delay_missing_storing()
