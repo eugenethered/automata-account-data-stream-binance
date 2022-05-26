@@ -1,5 +1,5 @@
 from core.position.Position import Position
-from core.trade.InstrumentTrade import Status as TradeStatus, InstrumentTrade
+from core.trade.InstrumentTrade import Status as TradeStatus, InstrumentTrade, TradeMode
 from core.trade.Order import Order
 from core.trade.Order import Status as OrderStatus
 from positionrepo.repository.PositionRepository import PositionRepository
@@ -14,13 +14,22 @@ class BinanceTradeDataMessageHandler:
 
     def handle_trade(self, order: Order):
         trade = self.trade_repository.retrieve_trade()
-        if trade.order_id == order.order_id and trade.status == TradeStatus.SUBMITTED and order.status == OrderStatus.EXECUTED:
+        if self.should_process_order(order, trade):
             trade.status = TradeStatus.EXECUTED
             trade.price = order.price
             trade.value = order.value
             trade.instant = order.instant
             self.trade_repository.store_trade(trade)
             self.create_position_from_trade(trade)
+
+    @staticmethod
+    def should_process_order(order, trade):
+        return (
+            trade.mode == TradeMode.TRADE and
+            trade.order_id == order.order_id and
+            trade.status == TradeStatus.SUBMITTED and
+            order.status == OrderStatus.EXECUTED
+        )
 
     def create_position_from_trade(self, trade: InstrumentTrade):
         instrument = trade.instrument_to

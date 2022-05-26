@@ -43,6 +43,7 @@ class BinanceTradeMessageTransformer:
             return self.transform_to_order(instrument_from, instrument_to, quantity, order_id, order_type, status, event_time, price, value)
         else:
             self.report_missing_order(symbol, side)
+            raise OrderTransformException(f'{symbol} and {side} does not have a trade transformation')
 
     def transform_to_order(self, instrument_from, instrument_to, quantity, order_id, raw_order_type, status, event_time, price, value) -> Order:
         order_quantity = self.obtain_big_float_value(quantity)
@@ -78,9 +79,7 @@ class BinanceTradeMessageTransformer:
         return None if result.is_zero() is True else result
 
     def report_missing_order(self, instrument, side):
-        def log_missing():
-            self.log.warning(f'No Trade Transformation for instrument:{instrument} and side:{side}')
+        self.log.warning(f'No Trade Transformation for instrument:{instrument} and side:{side}')
         missing_instrument_side = f'{instrument}+{side}'
         missing = Missing(missing_instrument_side, Context.TRADE, 'binance', f'Catastrophic cannot transform order for instrument:[{instrument}] and side:[{side}]')
-        self.config_reporter.report_missing(missing, log_missing)
-        raise OrderTransformException(f'{instrument} and {side} does not have a trade transformation')
+        self.config_reporter.report_missing(missing)
