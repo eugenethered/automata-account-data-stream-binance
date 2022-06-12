@@ -26,6 +26,7 @@ class BinanceAccountDataStream(ProcessBase):
     def init_web_socket_callbacks(self):
         self.ws_runner.set_stopped_callback(self.process_stopped)
         self.ws_runner.set_running_callback(self.process_running)
+        self.ws_runner.set_error_callback(self.process_error)
 
     def init_trade_message_processor(self):
         trade_transform_repository = TradeTransformRepository(self.options)
