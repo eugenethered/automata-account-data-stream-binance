@@ -1,6 +1,7 @@
 import logging
 
 from cache.holder.RedisCacheHolder import RedisCacheHolder
+from cache.provider.RedisCacheProviderWithHash import RedisCacheProviderWithHash
 from config.report.holder.ConfigReporterHolder import ConfigReporterHolder
 from core.arguments.command_line_arguments import url_option_arg_parser
 from logger.ConfigureLogger import ConfigureLogger
@@ -20,7 +21,7 @@ def start():
     log = logging.getLogger('Binance Account Data Stream')
     log.info(f'Binance Account Data Stream starting with URL {args.url} OPTIONS {args.options}')
 
-    RedisCacheHolder(args.options)
+    RedisCacheHolder(args.options, held_type=RedisCacheProviderWithHash)
 
     ConfigReporterHolder(args.options)
 
