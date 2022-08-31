@@ -1,0 +1,10 @@
+requests>=2.27.1
+persuader-technology-automata-core>=0.5.7
+persuader-technology-automata-utilities>=0.1.4
+persuader-technology-automata-redis>=0.3.6
+persuader-technology-automata-process-manager>=0.2.0
+persuader-technology-automata-data-stream>=0.2.4
+persuader-technology-automata-trade-repository>=0.1.6
+persuader-technology-automata-position-repository>=0.1.5
+persuader-technology-automata-trade-transform-repository>=0.1.1
+persuader-technology-automata-config>=0.1.4
