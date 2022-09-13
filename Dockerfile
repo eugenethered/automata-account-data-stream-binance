@@ -24,7 +24,7 @@ ENV PYTHONPATH="${PYTHONPATH}:/app/binance" \
     TRADE_HISTORY_LIMIT=100 \
     POSITION_HISTORY_LIMIT=100 \
     VERSION=0.1 \
-    PROCESS_RUN_PROFILE_KEY={}:process:run-profile:{} \
-    PROCESS_KEY={}:process:status:{}
+    PROCESS_RUN_PROFILE_KEY=binance:process:mv:run-profile \
+    PROCESS_KEY=binance:process:mv:status
 
 CMD ["python", "binance/__main__.py"]
